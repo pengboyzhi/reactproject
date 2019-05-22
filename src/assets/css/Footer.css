@@ -1,0 +1,30 @@
+
+@font-face {font-family: "icons";
+    src: url('../../library/fonts/iconfont.eot'); /* IE9*/
+    src: url('../../library/fonts/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../library/fonts/iconfont.woff') format('woff'), /* chrome, firefox */
+    url('../../library/fonts/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('../../library/fonts/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+   }
+  
+  i{
+    font-family:"icons" !important;
+    font-size:20px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+.footer{position:fixed;bottom:0;left:0;width:100%;height:60px;box-shadow:0 -1px 3px 0 #999;background:white;z-index:666}
+.footer ul li{width:25%;float:left;text-align:center;color:#333;font-size:14px}
+.footer ul a{display:block;height:50px;padding-top:7px;padding-bottom:3px}
+.footer ul h4{height:20px;line-height:20px}
+.footer ul p{height:30px;line-height:30px}
+.footer ul i{font-size:24px;color:#666}
+.footer ul li:nth-child(3) i{font-weight:bold}
+.footer ul li.active h4,.footer ul li.active i{color:#EC6941}
+.pd{padding-bottom:60px}
+.dkq{width:96%;height:40px;line-height:40px;text-indent:10px;margin:10px auto;background:white;box-shadow:0 0 0 1px #ddd}
+.dkq span{color:#999}
+.dkq input{float:right;margin-right:10px;margin-top:13px}
