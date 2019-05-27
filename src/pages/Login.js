@@ -3,9 +3,11 @@ import  '../assets/css/base.css'
 import '../assets/css/style.css'
 import dog from '../assets/img/dog.png'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
+import connect from "react-redux/es/connect/connect";
+import  {action2} from "../store/actions";
 
-export default class Login extends Component {
+
+class Login extends Component {
 	state={
     username:'',
     password:'',
@@ -16,23 +18,28 @@ export default class Login extends Component {
       [ev.target.name]:ev.target.value
     })
   }
+
   submit = async () => {
-    let res = await axios({
+    this.props.get({
       url:'/mock/login',
-      params:{
+      params: {
         username:this.state.username,
         password:this.state.password
+      },
+      typename:'UPDATE_USER'
+    }).then(
+      error => {
+        console.log(error);
+        if (error === 0){
+          localStorage.setItem('rc_user',JSON.stringify(this.props.user))
+          this.props.history.push('/user')
+        } else {
+          alert('error')
+        }
       }
-    });
+    )
 
-    // console.log(res)
-    if (res.data.error===0){
-      //写入local && 跳转user
-      localStorage.setItem('rc_user',JSON.stringify(res.data.page_data))
-      this.props.history.push('/user')
-    } else {
-      alert('失败')
-    }
+
   }
   render() {
     return (
@@ -59,3 +66,18 @@ export default class Login extends Component {
     )
   }
 }
+
+const initMapStateToProps=state=>({
+  user: state.user
+});
+
+const initMapDispatchToProps=dispatch=>({
+  get:({url,params,typename})=>dispatch(action2({
+    url,params,typename
+  }))
+});
+
+export default connect(
+  initMapStateToProps,
+  initMapDispatchToProps
+)(Login)

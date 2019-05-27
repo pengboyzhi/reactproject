@@ -59,7 +59,7 @@ form div{margin-bottom:10px;position:relative}
 .login i{vertical-align:top;margin-right:5px;color:#EC6941!important}
 
 /*主模块*/
-.container{max-width:414px;margin:0 auto;padding-top:44px;background:#EBE9EC}
+.container{max-width:414px;margin:0 auto;padding-top:44px;padding-bottom:50px;background:#EBE9EC}
 .pb{padding-bottom:60px}
 
 /*服务项目*/
@@ -91,7 +91,7 @@ form div{margin-bottom:10px;position:relative}
 .tabs1 li{width:33.33%;height:50px;float:left}
 .tabs1 li a{display:block;height:50px;line-height:50px;text-align:center;color:#444;box-shadow:0 -2px 0 0 #aaa inset}
 .tabs1 li.on a{box-shadow:0 -2px 0 0 #EC6941 inset; color:#EC6941 inset;}
-.content>li{padding:15px;line-height:26px;color:#666;background:white}
+.content>li{padding:15px;line-height:26px;color:#666;background:white;}
 .next{display:block;width:240px;height:40px;line-height:40px;text-align:center;border-radius:30px;background:#EC6941;color:white;margin:10px auto}
 
 

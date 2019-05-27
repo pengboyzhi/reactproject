@@ -15,12 +15,37 @@ import Service from "../pages/Service"
 import Prodetail from '../pages/Prodetail'
 import Proservice from '../pages/Proservice'
 import Article from '../pages/Article'
+import propTypes from 'prop-types'
+import Loading from '../layouts/Loading'
+import {action1} from "../store/actions";
+import connect from "react-redux/es/connect/connect";
+class App extends Component{
+  componentWillReceiveProps(nextProps){
+    let path = nextProps.location.pathname;
+    this.checkRoute(path);
+  }
+  componentDidMount(){
+    let path = this.props.location.pathname;
+    this.checkRoute(path);
+  }
 
-
-export default class App extends Component{
+  checkRoute = (path) => {
+    let {viewFoot} = this.props;
+    if (/home/.test(path)){
+    viewFoot(true);
+    }
+    if (/login|reg|proservice/.test(path)){
+      viewFoot(false);
+    }
+    if (/user/.test(path)){
+     viewFoot(true);
+    }
+  };
     render(){
+      let {bLoad,bFoot} =this.props;
         return (
             <div>
+            {bLoad && <Loading/>}
               <Switch>
                 <Route path="/home" component={Home}/>
                 <Route path="/login" component={Login}/>
@@ -34,8 +59,23 @@ export default class App extends Component{
                 <Redirect exact from="/" to="/home"/>
                 <Route component={Error}/>
               </Switch>
-              <Footer/>
+              {bFoot && <Footer {...this.props} />}
             </div>
           );
     }   
 }
+
+const initMapStateToProps=state=>({
+  bFoot:state.bFoot,
+  bLoading:state.bLoading,
+});
+
+const initMapDispatchToProps=dispatch=>({
+  viewFoot:(bl)=>dispatch({type:'VIEW_FOOT',payload:bl}),
+  viewLoading:(bl)=>dispatch({type:'VIEW_LOADING',payload:bl}),
+});
+
+export default connect(
+  initMapStateToProps,
+  initMapDispatchToProps
+)(App)

@@ -14,15 +14,15 @@ import im5 from '../assets/img/im5.png'
 import im6 from '../assets/img/im6.png'
 import im7 from '../assets/img/im7.png'
 import im8 from '../assets/img/im8.png'
-import banner0 from '../assets/img/banner0.png'
-import banner1 from '../assets/img/banner1.png'
 
-import axios from 'axios';
-
-export default class Home extends Component{
-	state={
-		homedate:[],
-		recom:[]
+import connect from "react-redux/es/connect/connect";
+import {action1} from '../store/actions';
+class Home extends Component{
+	constructor(props){
+	super();
+	//读取数据
+	props.get({url: '/mock/home',params:{_limit:10},typename: 'UPDATE_HOME'});
+	props.get({url: '/mock/recom',params:{_limit:20},typename: 'UPDATE_RECOM'});
 	}
     render(){
 		 let btnClass = "container pd";
@@ -96,7 +96,7 @@ export default class Home extends Component{
 					<ul className="content">
 						<li>
 							<ul className="service_list">
-							{this.state.homedate.map(item =>(
+							{this.props.home.map(item =>(
 								<li key={item.id}>
 								<Link 
 									to={{
@@ -117,10 +117,10 @@ export default class Home extends Component{
 							</ul>
 						</li>
 
-						<li>
+						<li style={{display:'none'}}>
 							<ul className="service_list">
 							{
-								this.state.recom.map(items =>(
+								this.props.recom.map(items =>(
 									<li key={items.id}>
 									<Link 
 									to={{
@@ -142,7 +142,7 @@ export default class Home extends Component{
 							</ul>
 						</li>
 
-						<li>
+						<li style={{display:'none'}}>
 							<ul className="service_list">
                             <li>宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科宠物百科</li>	
 							</ul>
@@ -152,12 +152,8 @@ export default class Home extends Component{
 			</div>
 		);
 		}
+		
 		async componentDidMount(){
-			let resHome = await axios({url:'/mock/home',params:{_limit:10}});
-			this.setState({homedate:resHome.data.page_data})
-			let reRecom = await axios({url:'/mock/recom',params:{_limit:30}});
-			this.setState({recom:reRecom.data.page_data})
-			
 			$(".tabs li").click(function(){
                 var index=$(this).index();
                 $(".tabs li").removeClass().eq(index).addClass("on");
@@ -165,3 +161,19 @@ export default class Home extends Component{
             })
 		}
 }
+
+const initMapStateToProps=state=>({
+	home:state.home,
+	recom:state.recom
+  });
+  
+  const initMapDispatchToProps=dispatch=>({
+	get:({url,params,typename})=>dispatch(action1({
+	  dispatch,url,params,typename
+	}))
+  });
+  
+  export default connect(
+	initMapStateToProps,
+	initMapDispatchToProps
+  )(Home)

@@ -13,8 +13,6 @@ export default class Footer extends Component {
             <li><NavLink to="/detail" activeClassName={style.active}><p><i>&#xe61d;</i></p><h4>商品</h4></NavLink></li>
             <li><NavLink to="/service" activeClassName={style.active}><p><i>&#xe61d;</i></p><h4>服务</h4></NavLink></li>
             <li><NavLink to="/user" activeClassName={style.active}><p><i>&#xe61d;</i></p><h4>个人中心</h4></NavLink></li>
-            <li><p><i>&#xe682;</i></p><h4>服务</h4></li>
-            <li><p><i>&#xe610;</i></p><h4>个人中心</h4></li>
         </ul>
     </div>
         // <div className={style['foot-btn']}>

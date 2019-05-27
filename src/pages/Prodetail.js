@@ -2,14 +2,11 @@ import React,{Component} from "react";
 import  '../assets/css/base.css'
 import '../assets/css/style.css'
 import banner0 from '../assets/img/banner0.png'
-import banner1 from '../assets/img/banner1.png'
-
-import axios from 'axios';
-import $ from 'jquery'
+import {action1} from "../store/actions";
+import connect from "react-redux/es/connect/connect";
 
 class Prodetail extends Component {
 	state={
-		detailDate:{},
 		num:1
 	}
 	jian(){
@@ -23,7 +20,7 @@ class Prodetail extends Component {
 		})
 	}
   render() {
-	let date =this.state.detailDate;
+	let date =this.props.data;
     return (
         <div className="wrap">
 	    <div className="top_fixed">
@@ -64,10 +61,21 @@ class Prodetail extends Component {
 	}
 	async componentDidMount(){
 		let id = this.props.match.params.id;
-        let res = await axios({url:`/mock/detail/${id}`});
-		this.setState({detailDate:res.data.page_data})
+		this.props.get({url:`/mock/detail/${id}`,typename: 'UPDATE_DETAIL'})
 		
-	}
-	
+	}	
 }
-export default Prodetail;
+const initMapStateToProps=state=>({
+	data:state.detail,
+  });
+  
+  const initMapDispatchToProps=dispatch=>({
+	get:({url,params,typename})=>dispatch(action1({
+	  dispatch,url,params,typename
+	}))
+  });
+  
+  export default connect(
+	initMapStateToProps,
+	initMapDispatchToProps
+  )(Prodetail)

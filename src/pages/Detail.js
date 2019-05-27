@@ -4,14 +4,19 @@ import '../assets/css/style.css'
 import {Link} from 'react-router-dom'
 
 import axios from 'axios';
+import connect from "react-redux/es/connect/connect";
+import {action1} from '../store/actions';
 
 class Detail extends Component {
-	state={
-		detailDate:[]
-	}
+	constructor(props){
+			super();
+			//读取数据
+			props.get({url: '/mock/detail',params:{_limit:10},typename: 'UPDATE_DETAIL'});
+			}
   render() {
 	let btnClass = "container pd";
 	let btnClass1="left_btn hide";
+	console.log(this.props.detailData)
     return (
       <div className="wrap">
       <div className="top_fixed">
@@ -22,7 +27,7 @@ class Detail extends Component {
     <div className={btnClass}>
 				 <ul className="pro_list clearfix">
 				 {
-					 this.state.detailDate.map(item => (
+					 this.props.detailData.map(item => (
 						<li key={item.id}>
 							<Link
 								to={{
@@ -56,10 +61,18 @@ class Detail extends Component {
       </div>
     )
 	}
-	async componentDidMount(){
-		let resDetail = await axios({url:'/mock/detail',params:{_limit:20}});
-		this.setState({detailDate:resDetail.data.page_data})
-		
-	}
+
 }
-export default Detail;
+const initMapStateToProps=state=>({
+	detailData:state.detail
+  });
+  const initMapDispatchToProps=dispatch=>({
+	get:({url,params,typename})=>dispatch(action1({
+	  dispatch,url,params,typename
+	}))
+  });
+  
+  export default connect(
+	initMapStateToProps,
+	initMapDispatchToProps
+  )(Detail)

@@ -2,12 +2,11 @@ import React,{Component} from "react";
 import  '../assets/css/base.css'
 import '../assets/css/style.css'
 import {NavLink} from 'react-router-dom'
-
-
-export default class User extends Component{
+import connect from "react-redux/es/connect/connect";
+class User extends Component{
     render(){
-		let {fans, follow, icon, nikename, time } = this.props.data;
-		console.log(this.props.data)
+		let {icon, nikename,fans} = this.props.user.page_data;
+		console.log(this.props.user)
 		let btnClass = "container pd";
 		let btnClass1="left_btn hide";
         return(
@@ -43,3 +42,15 @@ export default class User extends Component{
         )
     }
 }
+const initMapStateToProps=state=>({
+	user: state.user
+  });
+  
+  const initMapDispatchToProps=dispatch=>({
+  
+  });
+  
+  export default connect(
+	initMapStateToProps,
+	initMapDispatchToProps
+  )(User)

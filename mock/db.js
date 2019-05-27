@@ -39,7 +39,7 @@ module.exports = {
         img:mr.image('90x90',mr.color())
       }
     ] ,
-    'detail|100':[
+    'detail|50':[
       {
         'id|+1': 1,
         title: "@ctitle(4)",

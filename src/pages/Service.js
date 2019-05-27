@@ -3,13 +3,16 @@ import  '../assets/css/base.css'
 import '../assets/css/style.css'
 import {Link} from 'react-router-dom'
 
-import axios from 'axios';
-
-export default class App extends Component{
-	state={
-		servicedate:[]
-	}
+import connect from "react-redux/es/connect/connect";
+import {action1} from '../store/actions';
+class Service extends Component{
+	constructor(props){
+		super();
+		//读取数据
+		props.get({url: '/mock/service',params:{_limit:10},typename: 'UPDATE_SERVICE'});
+		}
     render(){
+			console.log(this.props.service)
         return (
         <div className="wrap">
 	    <div className="top_fixed">
@@ -21,7 +24,7 @@ export default class App extends Component{
 	    <div className="container pb">
 			<ul className="service_list">
 			{
-				this.state.servicedate.map(item =>(
+				this.props.service.map(item =>(
 					<li key={item.id}>
 					<Link 
 					to={{
@@ -50,9 +53,19 @@ export default class App extends Component{
         </div>
         );
 	}   
-	async componentDidMount(){
-		let resService = await axios({url:'/mock/service',params:{_limit:30}});
-		this.setState({servicedate:resService.data.page_data})
-		
-	}
 }
+
+const initMapStateToProps=state=>({
+	service:state.service
+  });
+  
+  const initMapDispatchToProps=dispatch=>({
+	get:({url,params,typename})=>dispatch(action1({
+	  dispatch,url,params,typename
+	}))
+  });
+  
+  export default connect(
+	initMapStateToProps,
+	initMapDispatchToProps
+  )(Service)

@@ -6,12 +6,20 @@ import '../src/assets/css/base.css';//基础样式引入
 
 import App from '../src/layouts/App'
 
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter,Route} from 'react-router-dom';
+import {Provider} from 'react-redux';
+
+import store from "./store";
+
+let  local = JSON.parse(localStorage.getItem('rc_user'));
+local && store.dispatch({type:'UPDATE_USER',payload:local})
 
 ReactDom.render(
+  <Provider store={store}>
   <BrowserRouter>
-    <App/>
+    <Route component={App}/>
   </BrowserRouter>
+</Provider>
   ,
   document.querySelector('#root')
 );
